@@ -3616,9 +3616,9 @@
     }
 
     .install-filter-bar {
-      display: flex;
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr);
       gap: 10px;
-      flex-wrap: wrap;
       align-items: center;
       background: white;
       padding: 12px 16px;
@@ -3629,6 +3629,9 @@
 
     .install-filter-bar select,
     .install-filter-bar input {
+      width: 100%;
+      min-width: 0;
+      margin: 0;
       padding: 7px 11px;
       border: 1.5px solid var(--gray-200);
       border-radius: 7px;
@@ -3636,6 +3639,26 @@
       background: white;
       outline: none;
       color: var(--gray-800);
+    }
+
+    @media (max-width: 680px) {
+      #view-installations .install-filter-bar {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      #view-installations .install-filter-bar input {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media (max-width: 420px) {
+      #view-installations .install-filter-bar {
+        grid-template-columns: 1fr;
+      }
+
+      #view-installations .install-filter-bar select {
+        grid-column: 1 / -1;
+      }
     }
 
     .install-group {
@@ -4880,7 +4903,7 @@
           <div id="inst-error-bar" style="display:none" class="sched-error-bar"></div>
           <div class="install-filter-bar">
             <input type="text" id="inst-search" placeholder="🔍  Search company, PO, location, serial no…"
-              oninput="renderInstallations()" style="flex:1;min-width:200px" />
+              oninput="renderInstallations()" />
             <select id="inst-filter-status" onchange="renderInstallations()">
               <option value="">All Statuses</option>
               <option value="Planned">🔵 Planned</option>
